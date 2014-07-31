@@ -46,18 +46,20 @@ angular.module('mgcrea.pullToRefresh', [])
 
           var shouldReload = false;
           iElement.bind('touchmove', function(ev) {
+            ptrElement.style.webkitTransitionDuration = 0;
+            ptrElement.style.margin = '0 auto';
+            
             var top = scrollElement[0].scrollTop;
-            if(top < -config.treshold && !shouldReload) {
+            if(top < config.treshold && !shouldReload) {
               setStatus('release');
-            } else if(top > -config.treshold && shouldReload) {
+            } else if(top > config.treshold && shouldReload) {
               setStatus('pull');
             }
           });
 
           iElement.bind('touchend', function(ev) {
             if(!shouldReload) return;
-            ptrElement.style.webkitTransitionDuration = 0;
-            ptrElement.style.margin = '0 auto';
+           
             setStatus('loading');
 
             var start = +new Date();
